@@ -3,96 +3,737 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Services de Création Numérique</title>
-    
+    <title>ChachaMode</title>
+    <link rel="stylesheet" href="styles.css">
 
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            position: relative;
+            text-align: center;
+            color: white;
+        }
+
+        .header-video {
+            position: relative;
+            height: 300px;
+            overflow: hidden;
+        }
+
+        .header-video video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.5);
+            height: 100%;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 10px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        main {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .product {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 600px;
+        }
+
+        .carousel {
+            display: flex;
+            overflow-x: scroll;
+        }
+
+        .carousel img {
+            max-width: 100%;
+            margin: 10px;
+            flex-shrink: 0;
+            height: auto;
+        }
+
+        .video video {
+    max-width: 100%; /* Limite la largeur maximale de la vidéo à 100% de la largeur du conteneur */
+    height: auto; /* Permet à la hauteur de la vidéo de s'ajuster automatiquement en fonction de la largeur */
+    display: block; /* Assurez-vous que la vidéo est affichée en tant que bloc pour appliquer les dimensions correctement */
+    margin: 0 auto; /* Centre la vidéo horizontalement dans son conteneur */
+}
+
+
+
+
+        button.buy-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button.buy-button:hover {
+            background-color: #45a049;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.4);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+        }
+
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        #cart-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 24px;
+            color: white;
+            z-index: 2;
+        }
+
+        #cart-button .icon {
+            font-size: 24px;
+        }
+
+        #cart-modal .modal-content {
+            max-width: 600px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .hamburger-menu {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .hamburger-menu .icon {
+            font-size: 24px;
+            color: white;
+        }
+
+        .side-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            height: 100%;
+            background-color: #333;
+            z-index: 1;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .side-menu.open {
+            transform: translateX(0);
+        }
+
+        .side-menu ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 50px 0 0;
+        }
+
+        .side-menu ul li {
+            padding: 15px;
+            text-align: center;
+        }
+
+        .side-menu ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            display: block;
+        }
+
+
+
+
+.video-description {
+    cursor: pointer;
+    text-align: center;
+    margin-top: 20px;
+    font-size: 16px;
+    color: #333;
+}
+
+.video-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+#product-video {
+    width: 80%;
+    max-width: 600px;
+}
+
+   
+    .hidden {
+        display: none;
+    }
+
+    #product-list {
+        padding: 20px;
+        border: 1px solid #ccc;
+        margin-top: 10px;
+    }
+
+
+
+.video-overlay {
+    display: none; /* Masqué par défaut */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 1001;
+}
+
+.video-overlay video {
+    width: 80%;
+    height: auto;
+}
+
+  
+    
+   .buy-button {
+    display: block;
+    margin: 10px auto; /* Marge automatique sur les côtés pour centrer horizontalement */
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+}
+
+</style>
 
 </head>
 <body>
-    <!-- Ajout du conteneur pour le nom du créateur -->
-    <a href="https://www.snapchat.com/add/lucious-lion04?share_id=E2B3bwMxt0U&locale=fr-FR" target="_blank">
-        <div class="creator-name">OLDEST</div>
-    </a>
-
     <header>
-        <h1>Service de création numérique avec ma signature</h1>
+        <div class="header-video">
+            <video autoplay muted loop playsinline>
+                <source src="https://www.w3schools.com/howto/rain.mp4" type="video/mp4">
+                Votre navigateur ne supporte pas la lecture des vidéos.
+            </video>
+            <div class="header-content">
+                <h1>Chacha Mode</h1>
+                <button class="hamburger-menu" onclick="toggleSideMenu()">
+                    <span class="icon">☰</span>
+                </button>
+                <nav>
+    <nav>
+    <ul>
+        <li><a href="#">Accueil</a></li>
+        <li><a href="#product-list">Robes de Mariage</a></li>
+        <li><a href="#">Contact</a></li>
+    </ul>
+</nav>
+
+                
+                <div class="side-menu" id="side-menu">
+                    <ul>
+                        <li><a href="#" onclick="showCart()">Voir Panier</a></li>
+                        <li><a href="#" onclick="closeSideMenu()">Fermer</a></li>
+                        <li><a href="#" onclick="showLoginForm()">Connexion</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </header>
-    <div class="container">
-        <div class="service">
-            <h2>Création de Filtres Snapchat Personnalisés</h2>
-            <p>Obtenez des filtres Snapchat uniques et personnalisés pour vos événements, mariages, fêtes d'anniversaire, ou pour promouvoir votre entreprise. Prix : <span class="price">45 €</span>. Exemple : <span class="description"><a href="https://lens.snapchat.com/51f227930cb9470f999d4b89cf475625?share_id=TyI6hFace_8&locale=fr-FR">Cliquez sur ce lien pour voir un exemple de filtre</a></span></p>
 
-<blockquote class="snapchat-embed" data-snapchat-embed-width="306" data-snapchat-embed-height="481" data-snapchat-embed-url="https://www.snapchat.com/lens/51f227930cb9470f999d4b89cf475625/embed" data-snapchat-embed-style="border-radius: 40px;" data-snapchat-embed-title="Lens FOOD TRUCK OL" style="background:#C4C4C4; border:0; border-radius:40px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:416px; min-width:326px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px); display: flex; flex-direction: column; position: relative; height:650px;"> <div style="display: flex; flex-direction: row; align-items: center;">  <a title="Lens FOOD TRUCK OL" href="https://www.snapchat.com/lens/51f227930cb9470f999d4b89cf475625" style="background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 40px; width: 40px; margin:16px; cursor: pointer"></a>  <div style="display: flex; flex-direction: column; flex-grow: 1; justify-content: center;"></div> </div> <div style="flex: 1;"></div> <div style="display: flex; flex-direction: row; align-items: center; border-end-end-radius: 40px; border-end-start-radius: 40px;">  <a title="Lens FOOD TRUCK OL" href="https://www.snapchat.com/lens/51f227930cb9470f999d4b89cf475625" style="background-color: yellow; width:100%; padding: 10px 20px; border: none; border-radius: inherit; cursor: pointer; text-align: center; display: flex;flex-direction: row;justify-content: center; text-decoration: none; color: black;">  View more on Snapchat  </a> </div></blockquote><script async src="https://www.snapchat.com/embed.js"></script>          
-        </div>
+    <main>
 
-<div class="service">
-    <h2>Création de Localisations pour Votre Entreprise</h2>
-    <p>Nous créons des localisations personnalisées pour votre entreprise, afin que vos clients puissent facilement vous trouver sur la carte <span class="map">map snapchat</span>. Prix : <span class="price">70 €</span>.</p>
-    <div class="image-container">
-        <img src="https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/13751a45-b5c0-d087-c33b-c7c8999cf15f.jpg" alt="Exemple de localisation" width="300">
+
+
+<section class="product">
+    <h2>Robe de Mariage Élégante</h2>
+    <p>Description : Robe élégante pour mariage, disponible en différentes tailles et couleurs.</p>
+    <p>Prix : 250.00 €</p>
+    <div class="carousel">
+        <img src="https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/27e028e7-7aa9-0e7b-2d77-e7b594456c6a.jpg" alt="Robe de Mariage 1">
+        <img src="https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/035b2a87-f8ce-fc6a-5d14-8812a6eef2a1.jpg" alt="Robe de Mariage 2">
     </div>
-    <p class="description">Cliquez sur ce lien pour voir un exemple : <a href="https://t.snapchat.com/MBfTkatp" target="_blank" class="map">Voir l'exemple</a></p>
-</div>
+    <p class="video-description" onclick="showVideo()">Voir modèle 🔽</p>
+    <div class="video-overlay" id="video-overlay">
+        <video id="product-video" controls>
+            <source src="https://firebasestorage.googleapis.com/v0/b/site-web-13015.appspot.com/o/InShot_20240624_144248381.mp4?alt=media&token=a08c1244-420a-4ac8-8c5d-3c2145fe23dc" type="video/mp4">
+            Votre navigateur ne supporte pas la lecture des vidéos.
+        </video>
+    </div>
+    <button class="buy-button" onclick="showBuyOptions()">Acheter</button>
+</section>
+
+<script>
+    function showVideo() {
+        var overlay = document.getElementById('video-overlay');
+        overlay.style.display = 'flex';
+    }
+
+    function hideVideo() {
+        var overlay = document.getElementById('video-overlay');
+        overlay.style.display = 'none';
+    }
+
+    document.getElementById('video-overlay').addEventListener('click', function(event) {
+        if (event.target.id === 'video-overlay') {
+            hideVideo();
+        }
+    });
+</script>
+
+
+
+
+<section class="product">
+    <h2>Robe de Mariage Élégante</h2>
+    <p>Description : Robe élégante pour mariage, disponible en différentes tailles et couleurs.</p>
+    <p>Prix : 250.00 €</p>
+    <div class="carousel">
+        <img src="https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/27e028e7-7aa9-0e7b-2d77-e7b594456c6a.jpg" alt="Robe de Mariage 1">
+        <img src="https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/035b2a87-f8ce-fc6a-5d14-8812a6eef2a1.jpg" alt="Robe de Mariage 2">
+    </div>
+    <p class="video-description" onclick="showVideo()">Voir modèle 🔽</p>
+    <div class="video-overlay" id="video-overlay">
+        <video id="product-video" controls>
+            <source src="https://firebasestorage.googleapis.com/v0/b/site-web-13015.appspot.com/o/InShot_20240624_144248381.mp4?alt=media&token=a08c1244-420a-4ac8-8c5d-3c2145fe23dc" type="video/mp4">
+            Votre navigateur ne supporte pas la lecture des vidéos.
+        </video>
+    </div>
+    <button class="buy-button" onclick="showBuyOptions()">Acheter</button>
+</section>
 
         
-
-<div class="service">
-    <h2>Création de Sites Web</h2>
-    <p>Je propose mes services de conception de sites web professionnels et conviviaux pour votre entreprise ou votre projet personnel. De plus, je crée chaque site en code HTML, assurant ainsi sa longévité et son autonomie vis-à-vis des plateformes comme Wix ou d'autres sites payants prix :</p>
-    <span class="price">80 €, 130 €, 160 €</span> selon la complexité.</p>
-
-    <div class="small-box-container">
-        <div class="small-box yellow">
-            <a href="lien_vers_page_jaune.html">
-                <h3>FOOD Restauration</h3>
-                <p>COMMANDEZ.</p>
-            </a>
-        </div>
-        <div class="small-box green">
-            <a href="lien_vers_page_vert.html">
-                <h3>"Coiffeur(euse)"</h3>
-                <p> accessoires.</p>
-            </a>
-        </div>
-        <div class="small-box red">
-            <a href="lien_vers_page_rouge.html">
-                <h3>Service de V.T.S</h3>
-                <p>Descrip.</p>
-            </a>
-        </div>
-    </div>
-</div>
-
-
-
-
-
-
-
         
-        <div class="service">
-            <h2>Contact</h2>
-            <p>Pour plus d'informations ou pour passer commande, veuillez nous contacter à l'adresse email suivante : <a href="mailto:oldestlucious@gmail.com">oldestlucious@gmail.com</a> ou par téléphone au : <span class="map">07 44 89 27 83</span></p>
-        </div>
-        <div class="service">
-            <h2>Réunion Webex</h2>
-            <p>Rejoignez notre réunion Webex pour discuter de vos besoins en création numérique : <a href="https://meet374.webex.com/meet/pr27420501817"><button class="button">Rejoindre la réunion</button></a></p>
+
+<section class="product">
+    <h2>Robe de Mariage Élégante</h2>
+    <p>Description : Robe élégante pour mariage, disponible en différentes tailles et couleurs.</p>
+    <p>Prix : 250.00 €</p>
+    <div class="carousel">
+        <img src="https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/27e028e7-7aa9-0e7b-2d77-e7b594456c6a.jpg" alt="Robe de Mariage 1">
+        <img src="https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/035b2a87-f8ce-fc6a-5d14-8812a6eef2a1.jpg" alt="Robe de Mariage 2">
+    </div>
+    <p class="video-description" onclick="showVideo()">Voir modèle 🔽</p>
+    <div class="video-overlay" id="video-overlay">
+        <video id="product-video" controls>
+            <source src="https://firebasestorage.googleapis.com/v0/b/site-web-13015.appspot.com/o/InShot_20240624_144248381.mp4?alt=media&token=a08c1244-420a-4ac8-8c5d-3c2145fe23dc" type="video/mp4">
+            Votre navigateur ne supporte pas la lecture des vidéos.
+        </video>
+    </div>
+    <button class="buy-button" onclick="showBuyOptions()">Acheter</button>
+</section>
+
+    </main>
+
+    <div id="buy-options" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeBuyOptions()">&times;</span>
+            <h2>Options d'Achat</h2>
+            <button onclick="addToCart()">Acheter par Carte 💳</button>
+            <button onclick="buyPhysically()">Acheter Physiquement 🛒</button>
         </div>
     </div>
+
+    <div id="payment-form-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closePaymentFormModal()">&times;</span>
+            <h2>Formulaire de Paiement</h2>
+            <form id="payment-form">
+                <label for="card-name">Nom sur la carte :</label>
+                <input type="text" id="card-name" required><br><br>
+                <label for="card-number">Numéro de carte :</label>
+                <input type="text" id="card-number" required><br><br>
+                <label for="expiry-date">Date d'expiration :</label>
+                <input type="text" id="expiry-date" placeholder="MM/YY" required><br><br>
+                <label for="cvv">CVV :</label>
+                <input type="text" id="cvv" required><br><br>
+
+                <button type="submit">Payer</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="message-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeMessageModal()">&times;</span>
+            <p id="modal-message"></p>
+        </div>
+    </div>
+
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeCartModal()">&times;</span>
+            <h2>Votre Panier</h2>
+            <div id="cart-items"></div>
+            <p><strong>Total:</strong> <span id="cart-total">0.00</span> €</p>
+            <button onclick="proceedToCheckout()">Passer à la Caisse</button>
+        </div>
+    </div>
+
+    <div id="registration-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeRegistrationModal()">&times;</span>
+            <h2>Inscription</h2>
+            <form id="registration-form">
+                <label for="name">Nom :</label>
+                <input type="text" id="name" required><br><br>
+                <label for="email">Email :</label>
+                <input type="email" id="email" required><br><br>
+                <label for="password">Mot de passe :</label>
+                <input type="password" id="password" required><br><br>
+                <button type="submit">S'inscrire</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeLoginModal()">&times;</span>
+            <h2>Connexion</h2>
+            <form id="login-form">
+                <label for="username">Nom d'utilisateur :</label>
+                <input type="text" id="username" required><br><br>
+                <label for="password">Mot de passe :</label>
+                <input type="password" id="password" required><br><br>
+                <button type="submit">Se Connecter</button>
+            </form>
+        </div>
+    </div>
+
+<section id="product-list" class="hidden">
+    <h2>Produits de Mariage</h2>
+    <div class="product">
+        <h2>Robe de Mariage Élégante</h2>
+        <p>Description : Robe élégante pour mariage, disponible en différentes tailles et couleurs.</p>
+        <p>Prix : 250.00 €</p>
+        <div class="carousel">
+            <img src="https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/27e028e7-7aa9-0e7b-2d77-e7b594456c6a.jpg" alt="Robe de Mariage 1">
+            <img src="https://mcusercontent.com/40a9f1a77d46874eba2309d88/images/035b2a87-f8ce-fc6a-5d14-8812a6eef2a1.jpg" alt="Robe de Mariage 2">
+        </div>
+        <p class="video-description" onclick="showVideo()">Voir modèle 🔽</p>
+        <div class="video-overlay" id="video-overlay">
+            <video id="product-video" controls>
+                <source src="https://firebasestorage.googleapis.com/v0/b/site-web-13015.appspot.com/o/InShot_20240624_144248381.mp4?alt=media&token=a08c1244-420a-4ac8-8c5d-3c2145fe23d" type="video/mp4">
+                Votre navigateur ne supporte pas la lecture des vidéos.
+            </video>
+        </div>
+        <button class="buy-button" onclick="showBuyOptions()">Acheter</button>
+    </div>
+</section>
+
+<script>
+   // Fonction pour afficher la vidéo
+function showVideo() {
+    var overlay = document.getElementById('video-overlay');
+    overlay.style.display = 'flex';
+}
+
+// Fonction pour masquer la vidéo
+function hideVideo() {
+    var overlay = document.getElementById('video-overlay');
+    overlay.style.display = 'none';
+}
+
+// Ajouter un événement de clic sur l'overlay pour masquer la vidéo lorsqu'on clique en dehors de la vidéo
+document.getElementById('video-overlay').addEventListener('click', function(event) {
+    if (event.target.id === 'video-overlay') {
+        hideVideo();
+    }
+});
+
+</script>
+
+
+<script>
+    document.querySelector('a[href="#product-list"]').addEventListener('click', function(event) {
+        event.preventDefault(); // Empêche le comportement par défaut du lien
+
+        var productListSection = document.getElementById('product-list');
+        var bodyChildren = document.body.children;
+
+        // Masquer tous les autres éléments du body
+        for (var i = 0; i < bodyChildren.length; i++) {
+            if (bodyChildren[i] !== productListSection) {
+                bodyChildren[i].classList.add('hidden');
+            }
+        }
+
+        // Afficher la section en plein écran
+        productListSection.classList.remove('hidden');
+        productListSection.classList.add('full-screen');
+    });
+</script>
+
+<script>
+function showVideo() {
+    document.getElementById('video-overlay').style.display = 'flex';
+}
+
+function hideVideo() {
+    document.getElementById('video-overlay').style.display = 'none';
+}
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    const videoOverlay = document.getElementById('video-overlay');
+    videoOverlay.addEventListener('click', hideVideo);
+});
+</script>
+
+                
 
     <script>
-        var lastScrollTop = 0;
-        window.addEventListener("scroll", function() {
-            var currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-            if (currentScroll > lastScrollTop) {
-                // Descendre la page
-                document.querySelector('.creator-name').classList.remove('hide');
+        let cart = [];
+
+        function showBuyOptions() {
+            document.getElementById('buy-options').style.display = 'block';
+        }
+
+        function closeBuyOptions() {
+            document.getElementById('buy-options').style.display = 'none';
+        }
+
+        function showPaymentForm() {
+            document.getElementById('payment-form-modal').style.display = 'block';
+        }
+
+        function closePaymentFormModal() {
+            document.getElementById('payment-form-modal').style.display = 'none';
+        }
+
+        function addToCart() {
+            const product = {
+                id: 1,
+                name: 'Robe de Mariage Élégante',
+                price: 250.00
+            };
+            cart.push(product);
+            updateCartTotal();
+            closeBuyOptions();
+            showModal('Produit ajouté au panier pour paiement par carte bleue.');
+        }
+
+        function buyPhysically() {
+            showModal('Veuillez contacter le 01 23 45 67 89 pour acheter physiquement.');
+            closeBuyOptions();
+        }
+
+        function showCart() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            cartItemsContainer.innerHTML = '';
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<p>Votre panier est vide.</p>';
             } else {
-                // Monter la page
-                document.querySelector('.creator-name').classList.add('hide');
+                cart.forEach((item, index) => {
+                    const cartItem = document.createElement('div');
+                    cartItem.className = 'cart-item';
+                    cartItem.innerHTML = `
+                        <span>${item.name} - ${item.price.toFixed(2)} €</span>
+                        <button onclick="removeFromCart(${index})">Supprimer</button>
+                    `;
+                    cartItemsContainer.appendChild(cartItem);
+                });
             }
-            lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
-        }, false);
-    </script>
+
+            document.getElementById('cart-modal').style.display = 'block';
+            updateCartTotal();
+        }
+
+        function closeCartModal() {
+            document.getElementById('cart-modal').style.display = 'none';
+        }
+
+        function updateCartTotal() {
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            document.getElementById('cart-total').innerText = total.toFixed(2);
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            showCart();
+        }
+
+        function proceedToCheckout() {
+            if (cart.length === 0) {
+                showModal('Votre panier est vide.');
+                return;
+            }
+
+            const loggedIn = checkLoginStatus(); // Function to check if user is logged in
+
+            if (loggedIn) {
+                showPaymentForm();
+            } else {
+                showRegistrationModal();
+            }
+        }
+
+        function showRegistrationModal() {
+            document.getElementById('registration-modal').style.display = 'block';
+            closeCartModal();
+        }
+
+        function closeRegistrationModal() {
+            document.getElementById('registration-modal').style.display = 'none';
+        }
+
+        function showLoginForm() {
+            document.getElementById('login-modal').style.display = 'block';
+document.body.style.overflow = 'hidden'; // Bloquer le défilement de la page sous le modal
+        }
+            function closeLoginModal() {
+        document.getElementById('login-modal').style.display = 'none';
+        document.body.style.overflow = 'auto'; // Réactiver le défilement de la page lorsque le modal est fermé
+    }
+
+    function checkLoginStatus() {
+        // Dummy function to simulate user login status
+        // Replace with your actual logic to check if user is logged in
+        return false; // Return true if user is logged in, false otherwise
+    }
+
+    function showModal(message) {
+        document.getElementById('modal-message').innerText = message;
+        document.getElementById('message-modal').style.display = 'block';
+    }
+
+    function closeMessageModal() {
+        document.getElementById('message-modal').style.display = 'none';
+    }
+
+    function toggleSideMenu() {
+        const sideMenu = document.getElementById('side-menu');
+        sideMenu.classList.toggle('open');
+    }
+
+    function closeSideMenu() {
+        const sideMenu = document.getElementById('side-menu');
+        sideMenu.classList.remove('open');
+    }
+
+    document.getElementById('payment-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Empêche le rechargement de la page par défaut
+
+        // Simuler le traitement du paiement (remplacer par votre logique de paiement réelle)
+        setTimeout(function() {
+            showModal('Paiement effectué avec succès !');
+            cart = []; // Réinitialiser le panier après le paiement
+            updateCartTotal();
+            closeCartModal();
+            closePaymentFormModal();
+        }, 2000); // Temps simulé de traitement du paiement (2 secondes ici)
+    });
+
+    document.getElementById('registration-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Empêche le rechargement de la page par défaut
+
+        // Logique pour l'inscription de l'utilisateur (à remplacer par votre propre logique)
+        showModal('Inscription réussie ! Veuillez maintenant procéder au paiement.');
+
+        // Simuler la fermeture du modal d'inscription
+        closeRegistrationModal();
+        showPaymentForm();
+    });
+
+    function closeRegistrationModal() {
+        document.getElementById('registration-modal').style.display = 'none';
+    }
+</script>
 </body>
 </html>
+
